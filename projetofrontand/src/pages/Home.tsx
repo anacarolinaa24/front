@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom"; // Importa o hook para navegação
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
-  const navigate = useNavigate(); // Hook para gerenciar navegação
+  const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/login"); // Redireciona para a página de login
+    navigate("/login");
   };
 
   return (
