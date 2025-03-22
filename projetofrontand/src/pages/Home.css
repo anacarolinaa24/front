@@ -1,0 +1,16 @@
+.paginaInicial {
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(194, 10, 111);
+}
+.paginaInicial img {
+  max-width: 80%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.paginaInicial img:hover {
+  transform: scale(1.05);
+}
