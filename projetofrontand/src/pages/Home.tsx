@@ -1,10 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
-const Home = () => {
+function Home() {
   const navigate = useNavigate();
 
-  const handleLoginClick = () => {
+  const goToRegister = () => {
+    navigate("/Register/RegisterUser");
+  };
+
+  const goToLogin = () => {
     navigate("/login");
   };
 
@@ -12,11 +16,14 @@ const Home = () => {
     <div className="paginaInicial">
       <h1 className="bemVindo">Seja bem-vindo!</h1>
       <img src="/src/assets/logo.png" alt="logo" />
-      <button className="loginButton" onClick={handleLoginClick}>
+      <button onClick={goToLogin} className="loginButton">
         Login
+      </button>
+      <button onClick={goToRegister} className="RegisterButton">
+        Cadastrar
       </button>
     </div>
   );
-};
+}
 
 export default Home;

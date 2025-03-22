@@ -7,15 +7,13 @@ const User = () => {
   const [errorMessage, setErrorMessage] = useState(""); // Estado para mensagem de erro
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para controlar o login
 
-  // Função que lida com o envio do formulário
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = (e) => {
     e.preventDefault(); // Previne o comportamento padrão de envio
-    // Lógica de login simulada
     if (username === "admin" && password === "1234") {
-      setIsLoggedIn(true); // Marca o usuário como logado
-      setErrorMessage(""); // Limpa qualquer mensagem de erro
+      setIsLoggedIn(true);
+      setErrorMessage(""); // Limpa mensagem de erro
     } else {
-      setErrorMessage("Nome de usuário ou senha inválidos!"); // Define uma mensagem de erro
+      setErrorMessage("Nome de usuário ou senha inválidos!");
     }
   };
 
@@ -28,28 +26,28 @@ const User = () => {
         </div>
       ) : (
         <form onSubmit={handleLogin} className="loginForm">
-          <label>
-            Nome de Usuário:
+          <div className="form-group">
+            <label htmlFor="username">Usuário:</label>
             <input
+              id="username"
               type="text"
               value={username}
-              onChange={(e) => setUsername(e.target.value)} // Atualiza o nome de usuário
-              placeholder="Digite seu nome de usuário"
-              required
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Digite seu Usuário ou E-mail" // Mensagem dentro do input
             />
-          </label>
-          <label>
-            Senha:
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Senha:</label>
             <input
+              id="password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)} // Atualiza a senha
-              placeholder="Digite sua senha"
-              required
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Digite sua senha" // Mensagem dentro do input
             />
-          </label>
+          </div>
           <button type="submit">Entrar</button>
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </form>
       )}
     </div>

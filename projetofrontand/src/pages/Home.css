@@ -50,7 +50,8 @@
     text-shadow: 0 0 20px #190b28, 0 0 30px #190b28;
   }
 }
-.loginButton {
+.loginButton,
+.RegisterButton {
   padding: 15px 30px;
   font-size: 1rem;
   border: 2px solid white;
@@ -61,7 +62,8 @@
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.loginButton:hover {
+.loginButton:hover,
+.RegisterButton:hover {
   background-color: #8d91c7;
   transform: scale(1.1);
 }

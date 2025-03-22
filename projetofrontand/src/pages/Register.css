@@ -1,0 +1,12 @@
+.loginPage {
+  display: contents;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  background-color: rgba(255, 255, 255, 0.037);
+}
+.loginPage h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  display: contents;
+}
