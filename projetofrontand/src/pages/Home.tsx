@@ -1,10 +1,11 @@
-import logoSite from "../assets/logo.png";
 import "./Home.css";
 
 const Home = () => {
   return (
     <div className="paginaInicial">
-      <img src={logoSite} alt="logo" />
+      <h1 className="bemVindo">Seja bem-vindo!</h1>
+
+      <img src="/src/assets/logo.png" alt="logo" />
     </div>
   );
 };

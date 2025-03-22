@@ -1,16 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Boldonse&family=Bungee+Shade&display=swap");
+
 .paginaInicial {
+  display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(194, 10, 111);
+
+  height: 100vh;
+  margin: 0;
 }
+
 .paginaInicial img {
-  max-width: 80%;
+  max-width: 50%;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px;
   transition: transform 0.3s ease;
 }
 
 .paginaInicial img:hover {
   transform: scale(1.05);
+}
+
+.bemVindo {
+  font-family: "Bungee Shade", cursive; /* Fonte estilizada */
+  font-size: 3rem; /* Tamanho grande */
+  color: #ffffff; /* Texto branco */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* Sombra para destaque */
+  position: absolute; /* Posiciona a frase em cima da imagem */
+  top: 20%; /* Alinha o texto verticalmente (ajuste conforme necessário) */
+  left: 50%; /* Centraliza horizontalmente */
+  transform: translateX(-50%); /* Corrige o alinhamento horizontal */
+  text-align: center; /* Centraliza o texto, caso ele tenha várias linhas */
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.bemVindo:hover {
+  animation: piscar 1s infinite; /* Ativa a animação de piscar ao passar o mouse */
+}
+
+/* Animação de piscar */
+@keyframes piscar {
+  0%,
+  100% {
+    color: #ffffff; /* Cor inicial */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    color: #00eeff; /* Cor alternativa ao piscar */
+    text-shadow: 0 0 20px #00eeff, 0 0 30px #00eeff;
+  }
 }
