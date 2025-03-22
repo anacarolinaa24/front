@@ -5,33 +5,33 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; /* Altura total da tela */
   margin: 0;
+  text-align: center; /* Centraliza o texto */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .paginaInicial img {
-  max-width: 50%;
+  max-width: 80%; /* Responsivo ao tamanho da tela */
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 8px white;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
   margin-bottom: 20px;
 }
 
 .paginaInicial img:hover {
-  transform: scale(1.05);
+  transform: scale(1.05); /* Zoom ao passar o mouse */
+  box-shadow: 0 4px 12px #ffc0cb; /* Degradê com rosa claro */
 }
 
-.bemVindo {
+.paginaInicial h1 {
   font-family: "Bungee Shade", cursive;
   font-size: 3rem;
   color: #ffffff;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
+  margin-bottom: 40px;
   transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
@@ -46,16 +46,25 @@
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
   }
   50% {
-    color: #190b28;
-    text-shadow: 0 0 20px #190b28, 0 0 30px #190b28;
+    color: #c20a6f; /* Rosa vibrante */
+    text-shadow: 0 0 20px #c20a6f, 0 0 30px #c20a6f;
   }
 }
+
+/* Botões */
+.buttonContainer {
+  display: flex;
+  justify-content: center; /* Centraliza os botões */
+  gap: 20px; /* Espaçamento entre os botões */
+  margin-top: 20px;
+}
+
 .loginButton,
 .RegisterButton {
-  padding: 15px 30px;
+  padding: 15px 30px; /* Botões maiores */
   font-size: 1rem;
   border: 2px solid white;
-  border-radius: 30%;
+  border-radius: 15px; /* Bordas mais arredondadas */
   background-color: #c20a6f;
   color: white;
   cursor: pointer;
@@ -64,6 +73,35 @@
 
 .loginButton:hover,
 .RegisterButton:hover {
-  background-color: #8d91c7;
-  transform: scale(1.1);
+  background-color: #ff69b4; /* Rosa vibrante ao passar o mouse */
+  transform: scale(1.05);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .paginaInicial img {
+    max-width: 90%;
+  }
+
+  .paginaInicial h1 {
+    font-size: 2.5rem;
+  }
+
+  .loginButton,
+  .RegisterButton {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .paginaInicial h1 {
+    font-size: 2rem;
+  }
+
+  .loginButton,
+  .RegisterButton {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+  }
 }

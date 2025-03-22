@@ -14,7 +14,7 @@ function Home() {
 
   return (
     <div className="paginaInicial">
-      <h1 className="bemVindo">Seja bem-vindo!</h1>
+      <h1>Seja bem-vindo!</h1>
       <img src="/src/assets/logo.png" alt="logo" />
       <button onClick={goToLogin} className="loginButton">
         Login
