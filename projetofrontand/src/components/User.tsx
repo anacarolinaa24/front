@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./User.css";
+import "../pages/Options";
+import Options from "../pages/Options";
 
 const User = () => {
   const [username, setUsername] = useState(""); // Estado para o nome de usuário
@@ -23,6 +25,7 @@ const User = () => {
         <div>
           <h2>Bem-vindo, {username}!</h2>
           <p>Você está logado no sistema.</p>
+          <Options />
         </div>
       ) : (
         <form onSubmit={handleLogin} className="loginForm">
