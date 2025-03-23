@@ -7,7 +7,7 @@
   background-color: rgba(255, 255, 255, 0.037); /* Fundo transparente */
 }
 
-.loginPage h1 {
+.loginPage h2 {
   font-family: Georgia, "Times New Roman", Times, serif;
   text-align: center; /* Centraliza o texto dentro do h1 */
   font-size: 3rem; /* Aumenta o tamanho do texto */

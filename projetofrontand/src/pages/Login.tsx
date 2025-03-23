@@ -4,7 +4,7 @@ import User from "../components/User";
 const Login = () => {
   return (
     <div className="loginPage">
-      <h1>Login</h1>
+      <h2>Login</h2>
       <User />
     </div>
   );
