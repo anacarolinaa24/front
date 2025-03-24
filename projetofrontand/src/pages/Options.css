@@ -9,11 +9,11 @@ body {
 }
 
 .container {
-  width: 500px; /* Largura ajustada */
+  width: 500px;
   padding: 30px;
   background-color: #fff;
-  border: 3px solid #ffc0cb; /* Contorno rosa */
-  border-radius: 20px; /* Bordas mais arredondadas */
+  border: 3px solid #ffc0cb;
+  border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
