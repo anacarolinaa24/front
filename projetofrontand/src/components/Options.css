@@ -9,46 +9,34 @@ body {
 }
 
 .container {
-  width: 500px;
-  padding: 30px;
+  margin: 0 auto;
+  padding: 2rem;
   background-color: #fff;
   border: 3px solid #ffc0cb;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 500px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #c20a6f;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-h2 {
-  color: #c20a6f;
-  margin-bottom: 20px;
-}
-
-.form-container {
+.button-container {
   display: flex;
-  flex-direction: column;
-  gap: 15px; /* Espaçamento entre as linhas */
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.form-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Espaço entre label e input */
-  padding: 10px 0;
-}
-
-label {
-  font-weight: bold;
-  color: #333;
-  width: 40%; /* Largura fixa */
-  text-align: right;
-  margin-right: 10px;
-}
-
-button {
-  width: 100%;
-  padding: 15px;
+.button {
+  padding: 0.75rem 1.5rem;
   background-color: #c20a6f;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 15px;
   font-size: 1rem;
@@ -57,7 +45,11 @@ button {
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-button:hover {
+.button:hover {
   background-color: #8d91c7;
-  transform: scale(1.05); /* Efeito de zoom no hover */
+  transform: scale(1.05);
+}
+
+.section {
+  margin-top: 2rem;
 }

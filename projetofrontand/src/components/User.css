@@ -2,80 +2,84 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Preenche toda a altura da tela */
+  min-height: 100vh; /* Altura total da tela */
   margin: 0;
-  background-color: #ffe4e1; /* Fundo rosado para a página */
-  font-family: Georgia, "Times New Roman", Times, serif;
+  background-color: #ffe4e1; /* Fundo suave para a página */
+  font-family: Arial, sans-serif;
 }
 
 .userLogin {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 500px; /* Largura ajustada */
+  padding: 30px;
+  background-color: #fff;
+  border: 3px solid #ffc0cb; /* Contorno rosa */
+  border-radius: 20px; /* Bordas mais arredondadas */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
+}
+
+h2 {
+  color: #c20a6f;
+  margin-bottom: 20px;
 }
 
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Espaçamento entre os grupos */
-  width: 450px; /* Formulário mais largo */
-  padding: 2rem 1.5rem;
-  background: #ffffff;
-  border: 3px solid #ffc0cb; /* Contorno rosa */
-  border-radius: 20px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra elegante */
+  gap: 15px; /* Espaçamento entre as linhas */
 }
 
 .form-group {
-  display: flex; /* Alinha label e input na mesma linha */
-  align-items: center; /* Centraliza os elementos verticalmente */
-  justify-content: flex-start; /* Alinha label e input à esquerda */
-  gap: 20px; /* Espaço entre label e input */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Espaço entre label e input */
+  padding: 10px 0;
 }
 
 label {
-  font-size: 1.2rem;
-  color: #333;
   font-weight: bold;
-  width: 150px; /* Largura fixa para os labels */
-  text-align: right; /* Alinha o texto do label à direita */
+  color: #333;
+  width: 40%; /* Largura fixa */
+  text-align: right;
+  margin-right: 10px;
 }
 
 input {
-  flex: 1; /* Faz o input ocupar o restante do espaço */
+  flex: 1;
   padding: 10px;
-  font-size: 1.2rem;
   border: 2px solid #ffc0cb; /* Contorno rosa */
   border-radius: 15px; /* Bordas arredondadas */
-  background-color: #ffe4e1; /* Fundo rosado nos inputs */
+  background-color: #ffe4e1; /* Fundo rosinha claro */
+  font-size: 1rem;
   box-sizing: border-box;
 }
 
-input::placeholder {
-  color: #888; /* Cor cinza claro para o placeholder */
-  font-style: italic;
+input:focus {
+  border-color: #c20a6f;
+  outline: none;
+  box-shadow: 0 0 8px rgba(194, 10, 111, 0.5); /* Realce ao focar */
 }
 
 button {
+  width: 100%;
   padding: 15px;
-  font-size: 1.3rem;
-  color: #ffffff;
-  background-color: #ff69b4; /* Botão rosa vibrante */
+  background-color: #c20a6f;
+  color: white;
   border: none;
-  border-radius: 15px; /* Bordas arredondadas no botão */
-  cursor: pointer;
+  border-radius: 15px;
+  font-size: 1rem;
   font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #ff1493;
-  transform: scale(1.1); /* Efeito de zoom no hover */
+  background-color: #8d91c7;
+  transform: scale(1.05); /* Efeito de zoom no hover */
 }
 
-.loginForm p {
-  font-size: 1rem;
+.error-message {
   color: red;
-  text-align: center; /* Centraliza o texto da mensagem de erro */
+  font-size: 0.9rem;
+  margin-top: 10px;
 }

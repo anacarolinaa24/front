@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./RegisterUser.css";
 import React, { useState } from "react";
 
@@ -11,6 +12,8 @@ const RegisterUser = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,6 +36,9 @@ const RegisterUser = () => {
 
     console.log("Usuário cadastrado:", formData);
     alert("Usuário cadastrado com sucesso!");
+
+    navigate("/options");
+
     setFormData({ nome: "", usuario: "", email: "", cpf: "", senha: "" });
     setErrorMessage("");
   };

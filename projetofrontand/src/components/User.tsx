@@ -1,19 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import "./User.css";
-import "../pages/Options";
-import Options from "../pages/Options";
+import "../components/Options";
 
 const User = () => {
-  const [username, setUsername] = useState(""); // Estado para o nome de usuário
-  const [password, setPassword] = useState(""); // Estado para a senha
-  const [errorMessage, setErrorMessage] = useState(""); // Estado para mensagem de erro
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para controlar o login
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const nagigate = useNavigate();
 
   const handleLogin = (e) => {
-    e.preventDefault(); // Previne o comportamento padrão de envio
+    e.preventDefault();
     if (username === "admin" && password === "1234") {
-      setIsLoggedIn(true);
       setErrorMessage(""); // Limpa mensagem de erro
+      alert("Login realizado com sucesso!");
+      nagigate("/Options"); // Redireciona para a página de opções
     } else {
       setErrorMessage("Nome de usuário ou senha inválidos!");
     }
@@ -21,38 +23,31 @@ const User = () => {
 
   return (
     <div className="userLogin">
-      {isLoggedIn ? (
-        <div>
-          <h2>Bem-vindo, {username}!</h2>
-          <p>Você está logado no sistema.</p>
-          <Options />
+      <form onSubmit={handleLogin} className="loginForm">
+        <h2>Login</h2>
+        <div className="form-group">
+          <label htmlFor="username">Usuário:</label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Digite seu Usuário ou E-mail"
+          />
         </div>
-      ) : (
-        <form onSubmit={handleLogin} className="loginForm">
-          <div className="form-group">
-            <label htmlFor="username">Usuário:</label>
-            <input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Digite seu Usuário ou E-mail" // Mensagem dentro do input
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Senha:</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Digite sua senha" // Mensagem dentro do input
-            />
-          </div>
-          <button type="submit">Entrar</button>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-        </form>
-      )}
+        <div className="form-group">
+          <label htmlFor="password">Senha:</label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Digite sua senha"
+          />
+        </div>
+        <button type="submit">Entrar</button>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </form>
     </div>
   );
 };

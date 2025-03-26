@@ -5,11 +5,11 @@ function Home() {
   const navigate = useNavigate();
 
   const goToRegister = () => {
-    navigate("/Register/RegisterUser");
+    navigate("/RegisterUser");
   };
 
   const goToLogin = () => {
-    navigate("/login");
+    navigate("/User");
   };
 
   return (
