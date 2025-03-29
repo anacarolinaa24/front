@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import "./User.css";
-import "../components/Options";
+import "../pages/Options";
 
 const User = () => {
   const [username, setUsername] = useState("");
