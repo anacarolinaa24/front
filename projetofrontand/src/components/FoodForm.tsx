@@ -32,12 +32,20 @@ const FoodForm: React.FC<FoodFormProps> = ({
       <div className="form-content">
         <h3>Adicionar Alimentos para {meal.name}</h3>
         <input
+          className="buscarAlimento"
           type="text"
           placeholder="Buscar alimento"
           value={searchTerm}
           onChange={(e) => onSearch(e.target.value)}
         />
-        <ul>
+        <input
+          className="quantidade"
+          type="number"
+          placeholder="Quantidade"
+          value={quantity}
+          onChange={(e) => onQuantityChange(Number(e.target.value))}
+        />
+        <ul className="adicionar">
           {searchResults.map((food) => (
             <li key={food.name}>
               {food.name} ({food.calories} kcal)
@@ -45,12 +53,6 @@ const FoodForm: React.FC<FoodFormProps> = ({
             </li>
           ))}
         </ul>
-        <input
-          type="number"
-          placeholder="Quantidade"
-          value={quantity}
-          onChange={(e) => onQuantityChange(Number(e.target.value))}
-        />
         <button className="close-button" onClick={onClose}>
           Fechar
         </button>

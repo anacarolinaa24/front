@@ -20,9 +20,32 @@
   width: 90%;
   position: relative;
 }
+h3 {
+  color: #c20a6f;
+}
+.buscarAlimento {
+  color: rgb(232, 134, 202);
+}
+.quantidade {
+  color: rgb(232, 134, 202);
+}
+.adicionar {
+  padding: 4px 8px; /* Botão menor */
+  background-color: #63b963;
+  color: white;
+  border: none;
+  border-radius: 15px; /* Arredondamento suave */
+  font-size: 0.8rem; /* Fonte menor */
+  cursor: pointer;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
 
+.adicionar:hover {
+  background-color: #63b963; /* Efeito de hover */
+}
 .close-button {
-  background-color: #ff69b4;
+  background-color: #c20a6f;
   color: white;
   border: none;
   border-radius: 12px;

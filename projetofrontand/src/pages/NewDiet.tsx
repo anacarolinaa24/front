@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import FoodForm from "../components/FoodForm";
+import { useNavigate } from "react-router-dom";
+import FoodSelection from "../components/FoodSelection";
 import "./NewDiet.css";
 
 interface Food {
@@ -13,6 +14,7 @@ interface Meal {
 }
 
 const NewDiet: React.FC = () => {
+  const navigate = useNavigate();
   const [dietName, setDietName] = useState("");
   const [meals, setMeals] = useState<Meal[]>([
     { name: "Café da manhã", foods: [] },
@@ -21,134 +23,89 @@ const NewDiet: React.FC = () => {
     { name: "Lanche da tarde", foods: [] },
     { name: "Jantar", foods: [] },
   ]);
-  const [dietSaved, setDietSaved] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<Food[]>([]);
-  const [quantity, setQuantity] = useState<number>(0);
-
-  const predefinedFoods: Food[] = [
-    { name: "Pão", calories: 80 },
-    { name: "Leite", calories: 120 },
-    { name: "Ovo", calories: 70 },
-    { name: "Frango", calories: 200 },
-    { name: "Arroz", calories: 150 },
-    { name: "Maçã", calories: 50 },
-  ];
-
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    const results = predefinedFoods.filter((food) =>
-      food.name.toLowerCase().includes(term.toLowerCase())
-    );
-    setSearchResults(results);
-  };
-
-  const addFoodToMeal = (food: Food) => {
-    if (selectedMeal && quantity > 0) {
-      setMeals((prevMeals) =>
-        prevMeals.map((meal) =>
-          meal.name === selectedMeal.name
-            ? {
-                ...meal,
-                foods: [...meal.foods, { food, quantity }],
-              }
-            : meal
-        )
-      );
-      setQuantity(0);
-      setSearchTerm("");
-      setSearchResults([]);
-    }
-  };
-
-  const removeFoodFromMeal = (foodName: string) => {
-    if (selectedMeal) {
-      setMeals((prevMeals) =>
-        prevMeals.map((meal) =>
-          meal.name === selectedMeal.name
-            ? {
-                ...meal,
-                foods: meal.foods.filter(
-                  (entry) => entry.food.name !== foodName
-                ),
-              }
-            : meal
-        )
-      );
-    }
-  };
+  const [isAddingFood, setIsAddingFood] = useState(false);
 
   const openForm = (meal: Meal) => {
     setSelectedMeal(meal);
-    setIsFormVisible(true);
+    setIsAddingFood(true);
   };
 
   const closeForm = () => {
-    setIsFormVisible(false);
-    setSelectedMeal(null);
+    setIsAddingFood(false);
   };
 
   const saveDiet = () => {
-    console.log("Dieta salva:", { dietName, meals });
-    setDietSaved(true);
+    if (dietName.trim() === "") {
+      alert("Por favor, insira um nome para a dieta.");
+      return;
+    }
+    navigate("/historic-diet", { state: { diet: { dietName, meals } } });
   };
 
   return (
     <div className="container">
       <h2>Simular Dieta</h2>
-      <div>
-        <input
-          type="text"
-          placeholder="Digite o nome da dieta"
-          value={dietName}
-          onChange={(e) => setDietName(e.target.value)}
-        />
+      <input
+        type="text"
+        placeholder="Digite o nome da dieta"
+        value={dietName}
+        onChange={(e) => setDietName(e.target.value)}
+        className="diet-input"
+      />
+
+      <div className="meal-list">
+        {meals.map((meal) => (
+          <div key={meal.name} className="meal-block">
+            <button onClick={() => openForm(meal)} className="meal-button">
+              {meal.name}
+            </button>
+
+            {/* Formulário sobreposto */}
+            {isAddingFood && selectedMeal?.name === meal.name && (
+              <div className="food-overlay">
+                <div className="food-card">
+                  <FoodSelection
+                    meal={meal}
+                    setMeals={setMeals}
+                    onClose={closeForm}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Lista de alimentos adicionados */}
+            <ul className="final-food-list">
+              {meal.foods.map(({ food, quantity }) => (
+                <li key={food.name} className="food-item">
+                  <span className="food-name">
+                    {food.name} - {quantity}x ({food.calories * quantity} kcal)
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
-      {meals.map((meal) => (
-        <div key={meal.name}>
-          <button onClick={() => openForm(meal)}>{meal.name}</button>
-          <ul>
-            {meal.foods.map(({ food, quantity }, index) => (
-              <li key={index} className="food-item">
-                <span>
-                  {food.name} - {quantity}x ({food.calories * quantity} kcal)
-                </span>
-                <button
-                  className="delete-button"
-                  onClick={() => removeFoodFromMeal(food.name)}
-                >
-                  🗑
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {/* Exibe apenas a soma final */}
+      <h2 className="diet-total">
+        Total de calorias da dieta:{" "}
+        {meals.reduce(
+          (total, meal) =>
+            total +
+            meal.foods.reduce(
+              (subtotal, item) => subtotal + item.food.calories * item.quantity,
+              0
+            ),
+          0
+        )}{" "}
+        kcal
+      </h2>
 
-      {isFormVisible && selectedMeal && (
-        <FoodForm
-          meal={selectedMeal}
-          searchResults={searchResults}
-          searchTerm={searchTerm}
-          quantity={quantity}
-          onSearch={(term) => {
-            setSearchTerm(term);
-            const results = predefinedFoods.filter((food) =>
-              food.name.toLowerCase().includes(term.toLowerCase())
-            );
-            setSearchResults(results);
-          }}
-          onAddFood={addFoodToMeal}
-          onClose={closeForm}
-          onQuantityChange={(value) => setQuantity(value)}
-        />
-      )}
-
-      <button onClick={saveDiet}>Salvar Dieta</button>
-      {dietSaved && <p>Dieta salva com sucesso!</p>}
+      <button onClick={saveDiet} className="save-button">
+        Salvar Simulação
+      </button>
     </div>
   );
 };

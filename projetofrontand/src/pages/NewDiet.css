@@ -1,165 +1,123 @@
-/* Fundo principal */
-.principal {
-  display: flex; /* Ativa flexbox para centralização */
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
-  min-height: 100vh; /* Ocupa toda a altura da tela */
-  background-color: #ffe4e1; /* Fundo rosa claro */
-  font-family: "Times New Roman", serif; /* Fonte refinada */
-  margin: 0;
-  padding: 0;
+.food-overlay {
+  position: fixed; /* Faz a sobreposição funcionar */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escurecido */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Sobre os outros elementos */
 }
 
-/* Contêiner do formulário */
+.food-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  max-width: 500px;
+}
+
+.diet-total {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #007bff;
+}
+
 .form-container {
-  background-color: #ffffff; /* Fundo branco */
-  border: 3px solid #ffc0cb; /* Contorno rosa claro */
-  border-radius: 25px; /* Bordas bem arredondadas */
-  padding: 20px; /* Espaçamento interno */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  width: 90%; /* Adapta o tamanho em telas pequenas */
-  max-width: 500px; /* Largura fixa */
-  text-align: center; /* Centraliza o conteúdo */
+  background-color: white;
+  padding: 30px;
+  width: 60%; /* Formulário maior */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Campo maior para o nome da dieta */
-/* Fundo principal */
-.principal {
-  display: flex; /* Ativa flexbox para centralização */
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
-  min-height: 100vh; /* Ocupa toda a altura da tela */
-  background-color: #ffe4e1; /* Fundo rosa claro */
-  font-family: "Times New Roman", serif; /* Fonte refinada */
-  margin: 0;
-  padding: 0;
+h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
-/* Contêiner do formulário */
-.form-container {
-  background-color: #ffffff; /* Fundo branco */
-  border: 3px solid #ffc0cb; /* Contorno rosa claro */
-  border-radius: 25px; /* Bordas bem arredondadas */
-  padding: 20px; /* Espaçamento interno */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  width: 90%; /* Adapta o tamanho em telas pequenas */
-  max-width: 500px; /* Largura fixa */
-  text-align: center; /* Centraliza o conteúdo */
+.final-food-list {
+  border-top: 2px solid #ddd;
+  padding-top: 10px;
+  list-style: none;
 }
 
-/* Campo maior para o nome da dieta */
-.form-container input[type="text"] {
-  width: 100%; /* Campo ocupa toda a largura do contêiner */
-  padding: 15px; /* Aumenta o espaço interno */
-  font-size: 18px; /* Texto maior */
-  margin: 15px 0; /* Espaçamento superior e inferior */
-  border: 2px solid #ff69b4; /* Contorno rosa */
-  border-radius: 25px; /* Bordas arredondadas */
-  outline: none;
-  background-color: #fff; /* Fundo branco */
-  box-shadow: 0 0 6px rgba(255, 105, 180, 0.4); /* Sombra suave */
-  color: #333; /* Texto legível */
+.food-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
 }
 
-.form-container input[type="text"]:focus {
-  border-color: #ff85c2; /* Contorno mais claro ao focar */
-  box-shadow: 0 0 10px rgba(255, 133, 194, 0.5); /* Destaque ao focar */
+.food-name {
+  flex: 2;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #007bff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Botão menor para salvar */
-.form-container .save-button {
-  background-color: #ff69b4; /* Fundo rosa */
-  color: #ffffff; /* Texto branco */
+.buscarAlimento {
+  width: 65%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.quantidade {
+  flex: 1; /* Define espaço proporcional */
+  width: auto;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.adicionar {
+  flex: 1; /* Mantém o botão proporcional à quantidade */
+  background-color: #5cb85c;
+  color: white;
   border: none;
-  border-radius: 12px; /* Bordas arredondadas */
-  padding: 8px 15px; /* Tamanho reduzido */
-  font-size: 14px; /* Texto menor */
+  padding: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  margin-top: 15px; /* Espaçamento superior */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Animação suave */
 }
 
-.form-container .save-button:hover {
-  background-color: #ff85c2; /* Rosa mais claro no hover */
-  transform: scale(1.05); /* Leve zoom */
+.adicionar:hover {
+  background-color: #4cae4c;
 }
 
-/* Botão de excluir alimento pequeno */
-.food-item .delete-button {
-  width: 25px; /* Pequeno e do tamanho do ícone */
-  height: 25px; /* Altura pequena */
-  background-color: #fff; /* Fundo branco */
-  border: 2px solid #ff69b4; /* Contorno branco */
-  border-radius: 50%; /* Botão circular */
-  display: flex; /* Flex para centralizar o ícone */
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.food-item .delete-button::before {
-  content: "🗑"; /* Ícone de lixo */
-  color: #ff0000; /* Lixo vermelho */
-  font-size: 16px; /* Tamanho ajustado do ícone */
-}
-
-.food-item .delete-button:hover {
-  background-color: #ff85c2; /* Fundo rosa claro no hover */
-}
-
-/* Botão menor para salvar */
-.form-container .save-button {
-  background-color: #ff69b4; /* Fundo rosa */
-  color: #ffffff; /* Texto branco */
+.lixeira {
+  background-color: transparent;
   border: none;
-  border-radius: 12px; /* Bordas arredondadas */
-  padding: 8px 15px; /* Tamanho reduzido */
-  font-size: 14px; /* Texto menor */
+  font-size: 1.2rem;
+  color: red;
   cursor: pointer;
-  margin-top: 15px; /* Espaçamento superior */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Animação suave */
+  transition: color 0.3s ease;
 }
 
-.form-container .save-button:hover {
-  background-color: #ff85c2; /* Rosa mais claro no hover */
-  transform: scale(1.05); /* Leve zoom */
+.lixeira:hover {
+  color: darkred;
 }
 
-/* Botão de excluir alimento pequeno */
-.food-item .delete-button {
-  width: 25px; /* Pequeno e do tamanho do ícone */
-  height: 25px; /* Altura pequena */
-  background-color: #fff; /* Fundo branco */
-  border: 2px solid #ff69b4; /* Contorno branco */
-  border-radius: 50%; /* Botão circular */
-  display: flex; /* Flex para centralizar o ícone */
-  justify-content: center;
-  align-items: center;
+.close-button {
+  margin-top: 16px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.food-item .delete-button {
-  width: 30px; /* Largura maior para o botão */
-  height: 30px; /* Altura maior para o botão */
-  background-color: #ffffff; /* Fundo branco para destaque */
-  border: 2px solid #ff0000; /* Contorno vermelho */
-  border-radius: 50%; /* Botão arredondado */
-  display: flex; /* Flex para centralizar o ícone */
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Suavidade no hover */
-}
-
-.food-item .delete-button::before {
-  content: "🗑"; /* Ícone de lixo */
-  color: #ff0000; /* Cor vermelha do ícone */
-  font-size: 20px; /* Tamanho aumentado para melhor visibilidade */
-}
-
-.food-item .delete-button:hover {
-  background-color: #ff85c2; /* Fundo rosa claro no hover */
-  transform: scale(1.1); /* Leve zoom para maior destaque */
 }
