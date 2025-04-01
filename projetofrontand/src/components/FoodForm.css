@@ -30,19 +30,19 @@ h3 {
   color: rgb(232, 134, 202);
 }
 .adicionar {
-  padding: 4px 8px; /* Botão menor */
+  padding: 4px 8px;
   background-color: #63b963;
   color: white;
   border: none;
-  border-radius: 15px; /* Arredondamento suave */
-  font-size: 0.8rem; /* Fonte menor */
+  border-radius: 15px;
+  font-size: 0.8rem;
   cursor: pointer;
   display: inline-block;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .adicionar:hover {
-  background-color: #63b963; /* Efeito de hover */
+  background-color: #63b963;
 }
 .close-button {
   background-color: #c20a6f;

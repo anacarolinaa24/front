@@ -38,7 +38,7 @@ li {
 }
 
 .quantity-input {
-  flex: 1; /* Tamanho menor para o input */
+  flex: 1;
   margin: 0 8px;
   padding: 4px;
   border: 1px solid #ddd;
@@ -48,7 +48,7 @@ li {
 }
 
 .add-button {
-  flex: 1; /* Tamanho menor para o botão */
+  flex: 1;
   background-color: #5cb85c;
   color: #fff;
   border: none;

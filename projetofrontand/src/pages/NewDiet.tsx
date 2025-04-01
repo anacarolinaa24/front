@@ -35,6 +35,19 @@ const NewDiet: React.FC = () => {
     setIsAddingFood(false);
   };
 
+  const removeFoodFromMeal = (mealName: string, foodName: string) => {
+    setMeals((prevMeals) =>
+      prevMeals.map((meal) =>
+        meal.name === mealName
+          ? {
+              ...meal,
+              foods: meal.foods.filter((entry) => entry.food.name !== foodName),
+            }
+          : meal
+      )
+    );
+  };
+
   const saveDiet = () => {
     if (dietName.trim() === "") {
       alert("Por favor, insira um nome para a dieta.");
@@ -81,6 +94,12 @@ const NewDiet: React.FC = () => {
                   <span className="food-name">
                     {food.name} - {quantity}x ({food.calories * quantity} kcal)
                   </span>
+                  <button
+                    className="delete-button"
+                    onClick={() => removeFoodFromMeal(meal.name, food.name)}
+                  >
+                    🗑
+                  </button>
                 </li>
               ))}
             </ul>
@@ -90,7 +109,7 @@ const NewDiet: React.FC = () => {
 
       {/* Exibe apenas a soma final */}
       <h2 className="diet-total">
-        Total de calorias da dieta:{" "}
+        Total de calorias consumidas:{" "}
         {meals.reduce(
           (total, meal) =>
             total +

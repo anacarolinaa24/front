@@ -2,18 +2,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Altura total da tela */
-  margin: 0;
-  background-color: #ffe4e1; /* Fundo suave para a página */
+  min-height: 100vh;
+  /margin: 0;
+  background-color: #ffe4e1;
   font-family: Arial, sans-serif;
 }
 
 .userLogin {
-  width: 500px; /* Largura ajustada */
+  width: 500px;
   padding: 30px;
   background-color: #fff;
-  border: 3px solid #ffc0cb; /* Contorno rosa */
-  border-radius: 20px; /* Bordas mais arredondadas */
+  border: 3px solid #ffc0cb;
+  border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
@@ -26,20 +26,20 @@ h2 {
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Espaçamento entre as linhas */
+  gap: 15px;
 }
 
 .form-group {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Espaço entre label e input */
+  justify-content: space-between;
   padding: 10px 0;
 }
 
 label {
   font-weight: bold;
   color: #333;
-  width: 40%; /* Largura fixa */
+  width: 40%;
   text-align: right;
   margin-right: 10px;
 }
@@ -47,9 +47,9 @@ label {
 input {
   flex: 1;
   padding: 10px;
-  border: 2px solid #ffc0cb; /* Contorno rosa */
-  border-radius: 15px; /* Bordas arredondadas */
-  background-color: #ffe4e1; /* Fundo rosinha claro */
+  border: 2px solid #ffc0cb;
+  /border-radius: 15px;
+  background-color: #ffe4e1;
   font-size: 1rem;
   box-sizing: border-box;
 }
@@ -57,7 +57,7 @@ input {
 input:focus {
   border-color: #c20a6f;
   outline: none;
-  box-shadow: 0 0 8px rgba(194, 10, 111, 0.5); /* Realce ao focar */
+  box-shadow: 0 0 8px rgba(194, 10, 111, 0.5);
 }
 
 button {
@@ -75,7 +75,7 @@ button {
 
 button:hover {
   background-color: #8d91c7;
-  transform: scale(1.05); /* Efeito de zoom no hover */
+  transform: scale(1.05);
 }
 
 .error-message {

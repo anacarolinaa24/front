@@ -23,9 +23,9 @@ ul {
 }
 
 li {
-  display: flex; /* Alinha os elementos em uma linha */
+  display: flex;
   align-items: center;
-  justify-content: space-between; /* Distribui espaço entre os elementos */
+  justify-content: space-between;
   border-bottom: 1px solid #eee;
   padding: 10px 0;
 }
@@ -35,28 +35,28 @@ li:last-child {
 }
 
 input[type="number"] {
-  width: 20%; /* Tamanho menor para o campo de quantidade */
+  width: 20%;
   padding: 6px;
   border: 1px solid #ddd;
-  border-radius: 20px; /* Bordas arredondadas */
+  border-radius: 20px;
   font-size: 0.9rem;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button {
-  padding: 6px 12px; /* Dimensão compacta */
+  padding: 6px 12px;
   background-color: #5cb85c;
   color: white;
   border: none;
-  border-radius: 20px; /* Bordas arredondadas */
+  border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-  background-color: #4cae4c; /* Efeito de hover */
+  background-color: #4cae4c;
 }
 
 .save-button {
@@ -65,11 +65,11 @@ button:hover {
   color: white;
   padding: 10px 20px;
   border: none;
-  border-radius: 20px; /* Bordas arredondadas */
+  border-radius: 20px;
   font-size: 1rem;
   cursor: pointer;
-  display: block; /* Centraliza o botão */
-  width: 100%; /* Botão de largura total */
+  display: block;
+  width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

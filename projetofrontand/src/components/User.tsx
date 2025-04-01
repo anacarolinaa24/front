@@ -13,9 +13,9 @@ const User = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (username === "admin" && password === "1234") {
-      setErrorMessage(""); // Limpa mensagem de erro
+      setErrorMessage("");
       alert("Login realizado com sucesso!");
-      nagigate("/Options"); // Redireciona para a página de opções
+      nagigate("/Options");
     } else {
       setErrorMessage("Nome de usuário ou senha inválidos!");
     }
