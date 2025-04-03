@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RegisterUser.css";
-import React, { useState } from "react";
 
 const RegisterUser = () => {
   const [formData, setFormData] = useState({
@@ -66,7 +66,7 @@ const RegisterUser = () => {
               name="usuario"
               value={formData.usuario}
               onChange={handleChange}
-              placeholder="Escolha um nome de usuário"
+              placeholder="Escolha um usuário"
               required
             />
           </div>
@@ -99,7 +99,7 @@ const RegisterUser = () => {
               name="senha"
               value={formData.senha}
               onChange={handleChange}
-              placeholder="Digite sua senha"
+              placeholder="Crie sua senha"
               required
             />
           </div>

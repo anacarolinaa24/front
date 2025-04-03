@@ -152,3 +152,42 @@ h2 {
 .delete-button:hover {
   background-color: darkred;
 }
+@media (max-width: 768px) {
+  .food-card {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .diet-input {
+    font-size: 0.9rem;
+  }
+
+  .buscarAlimento,
+  .quantidade,
+  .adicionar {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+  }
+
+  .food-card {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .diet-input {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+
+  .buscarAlimento,
+  .quantidade,
+  .adicionar {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+}

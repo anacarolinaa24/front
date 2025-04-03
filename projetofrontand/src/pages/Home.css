@@ -27,32 +27,15 @@
 }
 
 .paginaInicial h1 {
-  font-family: "Bungee Shade", cursive;
+  font-family: "Times New Roman", Times, serif;
   font-size: 3rem;
-  color: #ffffff;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  color: #ddd;
+  text-shadow: 2px 2px 6px rgb(0, 0, 0);
   margin-bottom: 40px;
   transition: color 0.3s ease, text-shadow 0.3s ease;
   text-align: center;
 }
 
-.bemVindo:hover {
-  animation: piscar 1.5s infinite;
-}
-
-@keyframes piscar {
-  0%,
-  100% {
-    color: white;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    color: #c20a6f; /* Rosa vibrante */
-    text-shadow: 0 0 20px #c20a6f, 0 0 30px #c20a6f;
-  }
-}
-
-/* Botões */
 .buttonContainer {
   display: flex;
   justify-content: center;
