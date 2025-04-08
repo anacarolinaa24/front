@@ -1,39 +1,48 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 
-interface UserProfile {
+interface ProfileData {
   nome: string;
   usuario: string;
   email: string;
   cpf: string;
-  senha: string;
+  senhaAtual: string;
+  novaSenha: string;
+  confirmarSenha: string;
 }
 
 const Profile = () => {
-  const [profile, setProfile] = useState<UserProfile>({
+  const [profile, setProfile] = useState<ProfileData>({
     nome: "",
     usuario: "",
     email: "",
     cpf: "",
-    senha: "",
+    senhaAtual: "",
+    novaSenha: "",
+    confirmarSenha: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // Adicionado estado para mensagem de sucesso
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Aqui você pode carregar os dados do usuário
-    // Simulando dados salvos
-    const mockUser = {
+    const userData = {
       nome: "Usuário Teste",
       usuario: "usuario123",
       email: "usuario@teste.com",
       cpf: "123.456.789-00",
-      senha: "******",
+      senha: "", // Este campo deveria ser senhaAtual, novaSenha e confirmarSenha
     };
-    setProfile(mockUser);
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      ...userData,
+      senhaAtual: "",
+      novaSenha: "",
+      confirmarSenha: "",
+    }));
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,15 +53,48 @@ const Profile = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      // Aqui você implementaria a lógica para salvar as alterações
-      setSuccessMessage("Perfil atualizado com sucesso!");
-      setTimeout(() => setSuccessMessage(""), 3000);
-    } catch (error) {
-      setErrorMessage("Erro ao atualizar perfil. Tente novamente.");
+
+    if (!profile.nome || !profile.usuario || !profile.cpf) {
+      setErrorMessage("Preencha todos os campos obrigatórios");
+      setSuccessMessage(""); // Limpa mensagem de sucesso
+      return;
     }
+
+    // Validação da senha atual (exemplo com senha mockada)
+    if (profile.senhaAtual !== "1234") {
+      setErrorMessage("Senha atual incorreta");
+      setSuccessMessage("");
+      return;
+    }
+
+    // Só valida as novas senhas se o usuário estiver tentando alterá-las
+    if (showChangePassword) {
+      if (!profile.novaSenha || !profile.confirmarSenha) {
+        setErrorMessage("Preencha todos os campos de senha");
+        setSuccessMessage("");
+        return;
+      }
+
+      if (profile.novaSenha !== profile.confirmarSenha) {
+        setErrorMessage("As novas senhas não correspondem");
+        setSuccessMessage("");
+        return;
+      }
+
+      if (profile.novaSenha.length < 6) {
+        setErrorMessage("A nova senha deve ter pelo menos 6 caracteres");
+        setSuccessMessage("");
+        return;
+      }
+    }
+
+    setSuccessMessage("Perfil atualizado com sucesso!"); // Define mensagem de sucesso
+    setErrorMessage(""); // Limpa mensagem de erro
+    setTimeout(() => {
+      navigate("/options");
+    }, 2000);
   };
 
   return (
@@ -109,15 +151,54 @@ const Profile = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="senha">Nova Senha:</label>
+          <label htmlFor="senhaAtual">Senha Atual:</label>
           <input
-            id="senha"
-            name="senha"
+            id="senhaAtual"
+            name="senhaAtual"
             type="password"
-            placeholder="Digite para alterar a senha"
+            value={profile.senhaAtual}
             onChange={handleChange}
+            placeholder="Senha atual para salvar alterações"
+            required
           />
         </div>
+
+        <button
+          type="button"
+          onClick={() => setShowChangePassword(!showChangePassword)}
+          className="change-password-button"
+        >
+          {showChangePassword ? "Cancelar alteração de senha" : "Alterar senha"}
+        </button>
+
+        {showChangePassword && (
+          <div className="senha-group">
+            <h3>Nova Senha</h3>
+            <div className="form-group">
+              <label htmlFor="novaSenha">Nova Senha:</label>
+              <input
+                id="novaSenha"
+                name="novaSenha"
+                type="password"
+                value={profile.novaSenha}
+                onChange={handleChange}
+                placeholder="Digite a nova senha"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="confirmarSenha">Confirmar Nova Senha:</label>
+              <input
+                id="confirmarSenha"
+                name="confirmarSenha"
+                type="password"
+                value={profile.confirmarSenha}
+                onChange={handleChange}
+                placeholder="Digite novamente a nova senha"
+              />
+            </div>
+          </div>
+        )}
 
         <div className="button-group">
           <button type="submit">Salvar Alterações</button>

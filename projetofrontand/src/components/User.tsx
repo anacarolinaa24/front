@@ -7,17 +7,22 @@ const User = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!username || !password) {
+      setErrorMessage("Preencha todos os campos");
+      return;
+    }
+
+    // Simula login bem sucedido
     if (username === "admin" && password === "1234") {
-      setErrorMessage("");
       alert("Login realizado com sucesso!");
-      navigate("/Options");
+      navigate("/options");
     } else {
-      setErrorMessage("Nome de usuário ou senha inválidos!");
+      setErrorMessage("Usuário ou senha incorretos");
     }
   };
 
@@ -32,7 +37,8 @@ const User = () => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Digite seu Usuário ou E-mail"
+            placeholder="Digite seu usuário"
+            required
           />
         </div>
         <div className="form-group">
@@ -43,6 +49,7 @@ const User = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Digite sua senha"
+            required
           />
         </div>
         <button type="submit">Entrar</button>

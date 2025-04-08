@@ -12,35 +12,23 @@ const RegisterUser = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
-
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      !formData.nome ||
-      !formData.usuario ||
-      !formData.email ||
-      !formData.cpf ||
-      !formData.senha
-    ) {
-      setErrorMessage("Todos os campos são obrigatórios.");
+    if (Object.values(formData).some((value) => !value)) {
+      setErrorMessage("Preencha todos os campos");
       return;
     }
 
-    console.log("Usuário cadastrado:", formData);
-    alert("Usuário cadastrado com sucesso!");
-
+    alert("Cadastro realizado com sucesso!");
     navigate("/options");
-
-    setFormData({ nome: "", usuario: "", email: "", cpf: "", senha: "" });
-    setErrorMessage("");
   };
 
   return (
@@ -49,8 +37,9 @@ const RegisterUser = () => {
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Nome:</label>
+            <label htmlFor="nome">Nome:</label>
             <input
+              id="nome"
               type="text"
               name="nome"
               value={formData.nome}
@@ -60,8 +49,9 @@ const RegisterUser = () => {
             />
           </div>
           <div className="form-group">
-            <label>Nome de Usuário:</label>
+            <label htmlFor="usuario">Usuário:</label>
             <input
+              id="usuario"
               type="text"
               name="usuario"
               value={formData.usuario}
@@ -71,8 +61,9 @@ const RegisterUser = () => {
             />
           </div>
           <div className="form-group">
-            <label>Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
+              id="email"
               type="email"
               name="email"
               value={formData.email}
@@ -82,8 +73,9 @@ const RegisterUser = () => {
             />
           </div>
           <div className="form-group">
-            <label>CPF:</label>
+            <label htmlFor="cpf">CPF:</label>
             <input
+              id="cpf"
               type="text"
               name="cpf"
               value={formData.cpf}
@@ -93,13 +85,14 @@ const RegisterUser = () => {
             />
           </div>
           <div className="form-group">
-            <label>Senha:</label>
+            <label htmlFor="senha">Senha:</label>
             <input
+              id="senha"
               type="password"
               name="senha"
               value={formData.senha}
               onChange={handleChange}
-              placeholder="Crie sua senha"
+              placeholder="Digite sua senha"
               required
             />
           </div>
