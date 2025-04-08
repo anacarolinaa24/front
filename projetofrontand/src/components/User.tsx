@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./User.css";
 import "../pages/Options";
@@ -8,14 +8,14 @@ const User = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const nagigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (username === "admin" && password === "1234") {
       setErrorMessage("");
       alert("Login realizado com sucesso!");
-      nagigate("/Options");
+      navigate("/Options");
     } else {
       setErrorMessage("Nome de usuário ou senha inválidos!");
     }

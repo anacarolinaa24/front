@@ -6,6 +6,7 @@ import RegisterUser from "./components/RegisterUser";
 import Options from "./pages/Options";
 import NewDiet from "./pages/NewDiet";
 import HistoricDiet from "./pages/HistoricDiet";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/NewDiet" element={<NewDiet />} />
         <Route path="/HistoricDiet" element={<HistoricDiet />} />
         <Route path="/RegisterUser" element={<RegisterUser />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
