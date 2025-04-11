@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 import "./User.css";
-import "../pages/Options";
 
 const User = () => {
   const [username, setUsername] = useState("");
@@ -9,7 +9,7 @@ const User = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!username || !password) {
@@ -17,11 +17,19 @@ const User = () => {
       return;
     }
 
-    // Simula login bem sucedido
-    if (username === "admin" && password === "1234") {
-      alert("Login realizado com sucesso!");
-      navigate("/options");
-    } else {
+    try {
+      const response = await api.post("/login", {
+        username,
+        password,
+      });
+
+      if (response.status === 200) {
+        // Salvar token
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.userId);
+        navigate("/options");
+      }
+    } catch (error) {
       setErrorMessage("Usuário ou senha incorretos");
     }
   };

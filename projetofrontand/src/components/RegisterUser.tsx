@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 import "./RegisterUser.css";
 
 const RegisterUser = () => {
@@ -12,6 +13,7 @@ const RegisterUser = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +21,7 @@ const RegisterUser = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (Object.values(formData).some((value) => !value)) {
@@ -27,8 +29,23 @@ const RegisterUser = () => {
       return;
     }
 
-    alert("Cadastro realizado com sucesso!");
-    navigate("/options");
+    try {
+      const response = await api.post("/usuarios", formData);
+
+      if (response.status === 201) {
+        setSuccessMessage("Cadastro realizado com sucesso!");
+        setErrorMessage("");
+        navigate("/options");
+      }
+    } catch (error: any) {
+      if (error.response) {
+        setErrorMessage(
+          error.response.data.message || "Erro ao cadastrar usuário"
+        );
+      } else {
+        setErrorMessage("Erro de conexão com o servidor");
+      }
+    }
   };
 
   return (
@@ -49,7 +66,7 @@ const RegisterUser = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="usuario">Usuário:</label>
+            <label htmlFor="usuario">Nome de Usuário:</label>
             <input
               id="usuario"
               type="text"

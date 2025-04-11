@@ -48,12 +48,20 @@ const NewDiet: React.FC = () => {
     );
   };
 
-  const saveDiet = () => {
-    if (dietName.trim() === "") {
-      alert("Por favor, insira um nome para a dieta.");
-      return;
+  // Adicionar salvamento da dieta
+  const saveDiet = async () => {
+    try {
+      const response = await api.post("/dietas", {
+        nome: dietName,
+        refeicoes: meals,
+      });
+
+      if (response.status === 201) {
+        navigate("/historic-diet");
+      }
+    } catch (error) {
+      console.error("Erro ao salvar dieta:", error);
     }
-    navigate("/historic-diet", { state: { diet: { dietName, meals } } });
   };
 
   return (

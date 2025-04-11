@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./HistoricDiet.css";
 
@@ -20,6 +20,20 @@ interface Diet {
 const HistoricDiet: React.FC = () => {
   const location = useLocation();
   const diet: Diet | undefined = location.state?.diet;
+
+  // Adicionar busca do histórico
+  useEffect(() => {
+    const fetchDiets = async () => {
+      try {
+        const response = await api.get("/dietas");
+        setDiets(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar dietas:", error);
+      }
+    };
+
+    fetchDiets();
+  }, []);
 
   if (!diet) {
     return <h2 className="historic-title">Nenhuma dieta foi salva ainda.</h2>;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
+import api from "../services/api";
 
 interface ProfileData {
   nome: string;
@@ -29,20 +30,25 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = {
-      nome: "Usuário Teste",
-      usuario: "usuario123",
-      email: "usuario@teste.com",
-      cpf: "123.456.789-00",
-      senha: "", // Este campo deveria ser senhaAtual, novaSenha e confirmarSenha
+    const fetchUserData = async () => {
+      try {
+        const response = await api.get(
+          `/usuarios/${localStorage.getItem("userId")}`
+        );
+        const userData = response.data;
+        setProfile((prev) => ({
+          ...prev,
+          ...userData,
+          senhaAtual: "",
+          novaSenha: "",
+          confirmarSenha: "",
+        }));
+      } catch (error) {
+        setErrorMessage("Erro ao carregar dados do usuário");
+      }
     };
-    setProfile((prevProfile) => ({
-      ...prevProfile,
-      ...userData,
-      senhaAtual: "",
-      novaSenha: "",
-      confirmarSenha: "",
-    }));
+
+    fetchUserData();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +59,7 @@ const Profile = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!profile.nome || !profile.usuario || !profile.cpf) {
@@ -62,39 +68,31 @@ const Profile = () => {
       return;
     }
 
-    // Validação da senha atual (exemplo com senha mockada)
-    if (profile.senhaAtual !== "1234") {
-      setErrorMessage("Senha atual incorreta");
-      setSuccessMessage("");
-      return;
+    try {
+      const updateData = {
+        nome: profile.nome,
+        usuario: profile.usuario,
+        cpf: profile.cpf,
+        ...(showChangePassword && {
+          senhaAtual: profile.senhaAtual,
+          novaSenha: profile.novaSenha,
+        }),
+      };
+
+      const response = await api.put(
+        `/usuarios/${localStorage.getItem("userId")}`,
+        updateData
+      );
+
+      if (response.status === 200) {
+        setSuccessMessage("Perfil atualizado com sucesso!");
+        setTimeout(() => navigate("/options"), 2000);
+      }
+    } catch (error: any) {
+      setErrorMessage(
+        error.response?.data?.message || "Erro ao atualizar perfil"
+      );
     }
-
-    // Só valida as novas senhas se o usuário estiver tentando alterá-las
-    if (showChangePassword) {
-      if (!profile.novaSenha || !profile.confirmarSenha) {
-        setErrorMessage("Preencha todos os campos de senha");
-        setSuccessMessage("");
-        return;
-      }
-
-      if (profile.novaSenha !== profile.confirmarSenha) {
-        setErrorMessage("As novas senhas não correspondem");
-        setSuccessMessage("");
-        return;
-      }
-
-      if (profile.novaSenha.length < 6) {
-        setErrorMessage("A nova senha deve ter pelo menos 6 caracteres");
-        setSuccessMessage("");
-        return;
-      }
-    }
-
-    setSuccessMessage("Perfil atualizado com sucesso!"); // Define mensagem de sucesso
-    setErrorMessage(""); // Limpa mensagem de erro
-    setTimeout(() => {
-      navigate("/options");
-    }, 2000);
   };
 
   return (
