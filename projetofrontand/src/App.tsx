@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
-import User from "./components/User";
-import RegisterUser from "./components/RegisterUser";
 import Options from "./pages/Options";
 import NewDiet from "./pages/NewDiet";
 import HistoricDiet from "./pages/HistoricDiet";
@@ -13,11 +11,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/User" element={<User />} />
-        <Route path="/Options" element={<Options />} />
-        <Route path="/NewDiet" element={<NewDiet />} />
-        <Route path="/HistoricDiet" element={<HistoricDiet />} />
-        <Route path="/RegisterUser" element={<RegisterUser />} />
+        <Route path="/options" element={<Options />} />
+        <Route path="/new-diet" element={<NewDiet />} />
+        <Route path="/historic-diet" element={<HistoricDiet />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
