@@ -1,9 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
 
-body,
-.home-container,
-.home-box-row {
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
 }
 
 .home-box-row {
@@ -14,9 +23,11 @@ body,
   box-shadow: 0 4px 24px rgba(44, 62, 80, 0.18);
   padding: 2.5rem 2rem;
   max-width: 750px;
-  width: 100%;
+  width: auto;
+  margin: 0 auto;
   align-items: center;
   gap: 2.5rem;
+  justify-content: center;
 }
 
 .home-logo-area {
@@ -61,10 +72,10 @@ body,
 }
 
 .home-form-area {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* Removido flex: 1 para não esticar o cartão */
 }
 
 .form-toggle {
@@ -154,6 +165,9 @@ body,
     gap: 1.5rem;
     padding: 2rem 0.5rem;
     max-width: 98vw;
+    width: auto;
+    margin: 0 auto;
+    justify-content: center;
   }
   .form {
     width: 95vw;

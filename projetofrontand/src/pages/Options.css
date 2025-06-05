@@ -1,16 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
 
-.options-container {
+/* Container lateral principal para opções + formulário lateral */
+.options-lateral-container {
   min-height: 100vh;
   min-width: 100vw;
   background: #000;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center; /* Centraliza verticalmente por padrão */
+  justify-content: center; /* Centraliza horizontalmente por padrão */
+  transition: align-items 0.3s, justify-content 0.3s;
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
   box-sizing: border-box;
   padding: 0;
+}
+
+/* Quando o painel lateral estiver aberto, alinha à esquerda */
+.options-lateral-container.with-side {
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .options-box-row {
@@ -48,7 +56,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 12px rgba(46, 204, 113, 0.15);
+  /* Remove o quadrado de fundo e adiciona efeito de luz/contraste */
+  background: none;
+  box-shadow: 0 0 100px 1px #206c40df, 0 0 0 0 #fff;
+  border-radius: 50%;
+  transition: box-shadow 0.3s;
+}
+
+.user-avatar:hover {
+  box-shadow: 0 0 48px 16px #c20a6f, 0 0 0 0 #fff;
 }
 
 .profile-button {
@@ -117,8 +133,66 @@
   outline: none;
 }
 
+/* Painel lateral do formulário */
+.side-content {
+  background: #181818;
+  border-radius: 22px;
+  border: 2.5px solid #c20a6f;
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.18);
+  min-width: 400px;
+  min-height: 500px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 2;
+  animation: sideIn 0.5s;
+  margin-left: 32px; /* Espaço entre o cartão e o painel lateral */
+}
+
+@keyframes sideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.back-button {
+  background: #c20a6f;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 0.5em 1.5em;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.back-button:hover {
+  background: #fff;
+  color: #c20a6f;
+}
+
 /* Responsivo */
 @media (max-width: 900px) {
+  .options-lateral-container,
+  .options-lateral-container.with-side {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+  .side-content {
+    margin-left: 0;
+    margin-top: 2rem;
+    min-width: unset;
+    width: 95vw;
+  }
   .options-box-row {
     flex-direction: column;
     align-items: center;

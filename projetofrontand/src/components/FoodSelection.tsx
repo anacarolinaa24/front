@@ -3,11 +3,13 @@ import "./FoodSelection.css";
 import api from "../services/api";
 
 interface Food {
+  id: number;
   name: string;
   calories: number;
 }
 
 interface Meal {
+  id: number;
   name: string;
   foods: { food: Food; quantity: number }[];
 }
@@ -72,6 +74,18 @@ const FoodSelection: React.FC<FoodSelectionProps> = ({
     }
   };
 
+  // Remover alimento da refeição
+  const handleRemoveFood = async (foodName: string) => {
+    try {
+      await api.delete(`/refeicoes/${meal.id}/alimentos/${foodName}`);
+      // Atualizar lista de refeições
+      const response = await api.get("/refeicoes");
+      setMeals(response.data);
+    } catch (error) {
+      console.error("Erro ao remover alimento:", error);
+    }
+  };
+
   const calculateTotalCalories = () => {
     return meal.foods.reduce(
       (total, item) => total + item.food.calories * item.quantity,
@@ -104,7 +118,7 @@ const FoodSelection: React.FC<FoodSelectionProps> = ({
 
         <ul className="food-list">
           {searchResults.map((food) => (
-            <li key={food.name} className="food-item">
+            <li key={food.id} className="food-item">
               <span className="food-info">
                 {food.name} ({food.calories} kcal)
               </span>
@@ -116,6 +130,23 @@ const FoodSelection: React.FC<FoodSelectionProps> = ({
         </ul>
 
         <div className="meal-summary">
+          <h4>Alimentos adicionados:</h4>
+          <ul className="food-list">
+            {meal.foods.map(({ food, quantity }) => (
+              <li key={food.name} className="food-item">
+                <span className="food-info">
+                  {food.name} - {quantity}x ({food.calories * quantity} kcal)
+                </span>
+                <button
+                  className="delete-button"
+                  title="Remover"
+                  onClick={() => handleRemoveFood(food.name)}
+                >
+                  🗑
+                </button>
+              </li>
+            ))}
+          </ul>
           <h4>Total da refeição: {calculateTotalCalories()} kcal</h4>
         </div>
 

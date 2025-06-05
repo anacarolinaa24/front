@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import FoodSelection from "../components/FoodSelection";
 import "./NewDiet.css";
 
@@ -14,7 +13,6 @@ interface Meal {
 }
 
 const NewDiet: React.FC = () => {
-  const navigate = useNavigate();
   const [dietName, setDietName] = useState("");
   const [meals, setMeals] = useState<Meal[]>([
     { name: "Café da manhã", foods: [] },
@@ -48,24 +46,18 @@ const NewDiet: React.FC = () => {
     );
   };
 
-  // Adicionar salvamento da dieta
+  // Simulação de salvamento (remova navigate!)
   const saveDiet = async () => {
     try {
-      const response = await api.post("/dietas", {
-        nome: dietName,
-        refeicoes: meals,
-      });
-
-      if (response.status === 201) {
-        navigate("/historic-diet");
-      }
+      // Aqui você pode chamar sua API se quiser
+      alert("Simulação salva!");
     } catch (error) {
       console.error("Erro ao salvar dieta:", error);
     }
   };
 
   return (
-    <div className="container">
+    <div className="side-diet-panel">
       <h2>Simular Dieta</h2>
       <input
         type="text"

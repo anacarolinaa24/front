@@ -1,17 +1,42 @@
 .profile-form {
-  background: #fff;
-  padding: 30px;
-  border-radius: 20px;
-  border: 3px solid #ffc0cb;
+  background: #181818;
+  padding: 2.5rem 2rem;
+  border-radius: 22px;
+  border: 2.5px solid #c20a6f;
   width: 100%;
-  max-width: 500px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  max-width: 420px;
+  min-width: 260px;
+  margin: 0 auto; /* Centraliza dentro do componente pai */
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.18);
+  color: #fff;
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Efeito de entrada animada */
+  transform: translateX(60px);
+  opacity: 0;
+  animation: slideInProfile 0.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  box-sizing: border-box;
+}
+
+@keyframes slideInProfile {
+  from {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .profile-form h2 {
   color: #c20a6f;
   text-align: center;
   margin-bottom: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .form-group {
@@ -19,28 +44,36 @@
 }
 
 .form-group label {
-  display: block;
+  display: flex;
+  align-items: center;
   margin-bottom: 5px;
-  color: #333;
-  font-weight: bold;
+  color: #fff;
+  font-weight: 600;
+  gap: 8px;
 }
 
 .form-group input {
   width: 100%;
   padding: 10px;
-  border: 2px solid #ffc0cb;
+  border: 1.5px solid #c20a6f;
   border-radius: 8px;
   font-size: 1rem;
+  background: #222;
+  color: #fff;
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+  transition: border 0.2s;
+  box-sizing: border-box;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #c20a6f;
-  box-shadow: 0 0 5px rgba(194, 10, 111, 0.3);
+  border-color: #2ecc71;
+  box-shadow: 0 0 5px rgba(44, 204, 113, 0.15);
 }
 
 .disabled-input {
-  background-color: #f0f0f0;
+  background-color: #222;
+  color: #888;
   cursor: not-allowed;
 }
 
@@ -57,7 +90,8 @@
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
 
 .button-group button[type="submit"] {
@@ -66,20 +100,24 @@
 }
 
 .cancel-button {
-  background-color: #ffc0cb;
-  color: #333;
+  background-color: #fff;
+  color: #c20a6f;
+  border: 1.5px solid #c20a6f;
 }
 
-.button-group button:hover {
-  transform: translateY(-2px);
+.button-group button:hover,
+.change-password-button:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: #c20a6f;
+  color: #fff;
 }
 
 .success-message {
-  color: #28a745;
+  color: #2ecc71;
   text-align: center;
   margin-top: 15px;
   padding: 10px;
-  background-color: #d4edda;
+  background-color: #222;
   border-radius: 5px;
 }
 
@@ -88,16 +126,16 @@
   text-align: center;
   margin-top: 15px;
   padding: 10px;
-  background-color: #f8d7da;
+  background-color: #222;
   border-radius: 5px;
 }
 
 .senha-group {
   margin-top: 20px;
   padding: 20px;
-  border: 1px solid #ffc0cb;
+  border: 1px solid #c20a6f;
   border-radius: 8px;
-  background-color: rgba(255, 192, 203, 0.05);
+  background-color: #222;
 }
 
 .senha-group h3 {
@@ -109,16 +147,44 @@
 .change-password-button {
   width: 100%;
   padding: 10px;
-  margin: 20px 0;
+  margin: 20px 0 0 0;
   background-color: transparent;
   border: 2px solid #c20a6f;
   color: #c20a6f;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
 
-.change-password-button:hover {
-  background-color: #c20a6f;
-  color: white;
+.edit-pencil {
+  background: none;
+  border: none;
+  color: #c20a6f;
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  vertical-align: middle;
+  transition: color 0.2s;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+.edit-pencil:hover {
+  color: #2ecc71;
+}
+.editable-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .profile-form {
+    min-width: 90vw;
+    max-width: 98vw;
+    padding: 1rem 0.5rem;
+    margin: 0 auto;
+  }
 }

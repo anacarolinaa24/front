@@ -77,7 +77,7 @@ function Home() {
               className={formType === "register" ? "active" : ""}
               onClick={() => setFormType("register")}
             >
-              Cadastrar
+              Cadastro
             </button>
           </div>
           {formType === "login" ? (
