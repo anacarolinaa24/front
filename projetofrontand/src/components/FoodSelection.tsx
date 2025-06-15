@@ -1,44 +1,40 @@
 import React, { useState, useEffect } from "react";
 import "./FoodSelection.css";
-import api from "../services/api";
 
 interface Food {
   id: number;
-  name: string;
-  calories: number;
-}
-
-interface Meal {
-  id: number;
-  name: string;
-  foods: { food: Food; quantity: number }[];
+  nome: string;
+  calorias: number;
 }
 
 interface FoodSelectionProps {
-  meal: Meal;
-  setMeals: React.Dispatch<React.SetStateAction<Meal[]>>;
+  onSelect: (food: Food, quantidade: number) => void;
   onClose: () => void;
+  onNewFood: () => void;
 }
 
 const FoodSelection: React.FC<FoodSelectionProps> = ({
-  meal,
-  setMeals,
+  onSelect,
   onClose,
+  onNewFood,
 }) => {
   const [foods, setFoods] = useState<Food[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<Food[]>([]);
-  const [quantity, setQuantity] = useState(1);
+  const [selectedFood, setSelectedFood] = useState<Food | null>(null);
+  const [quantidade, setQuantidade] = useState(0);
 
-  // Buscar alimentos do backend
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        setLoading(true);
-        const response = await api.get("/alimentos");
-        setFoods(response.data);
-        setSearchResults(response.data);
+        const token = localStorage.getItem("token");
+        const response = await fetch("http://localhost:3001/api/alimentos", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        setFoods(data);
       } catch (error) {
         console.error("Erro ao buscar alimentos:", error);
       } finally {
@@ -49,110 +45,53 @@ const FoodSelection: React.FC<FoodSelectionProps> = ({
     fetchFoods();
   }, []);
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    setSearchResults(
-      foods.filter((food) =>
-        food.name.toLowerCase().includes(term.toLowerCase())
-      )
-    );
-  };
-
-  // Adicionar alimento à refeição
-  const handleAddFood = async (food: Food) => {
-    try {
-      await api.post(`/refeicoes/${meal.id}/alimentos`, {
-        alimentoId: food.id,
-        quantidade: quantity,
-      });
-
-      // Atualizar lista de refeições
-      const response = await api.get("/refeicoes");
-      setMeals(response.data);
-    } catch (error) {
-      console.error("Erro ao adicionar alimento:", error);
-    }
-  };
-
-  // Remover alimento da refeição
-  const handleRemoveFood = async (foodName: string) => {
-    try {
-      await api.delete(`/refeicoes/${meal.id}/alimentos/${foodName}`);
-      // Atualizar lista de refeições
-      const response = await api.get("/refeicoes");
-      setMeals(response.data);
-    } catch (error) {
-      console.error("Erro ao remover alimento:", error);
-    }
-  };
-
-  const calculateTotalCalories = () => {
-    return meal.foods.reduce(
-      (total, item) => total + item.food.calories * item.quantity,
-      0
-    );
-  };
+  const filteredFoods = foods.filter((food) =>
+    food.nome.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="form-overlay">
-      <div className="form-content">
-        <h3>Adicionar Alimentos para {meal.name}</h3>
+    <div className="food-selection-modal">
+      <div className="food-selection-content">
+        <h3>Selecionar Alimento</h3>
 
         <div className="search-section">
           <input
-            className="buscarAlimento"
             type="text"
-            placeholder="Buscar alimento"
+            placeholder="Buscar alimento..."
             value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-          <input
-            className="quantidade"
-            type="number"
-            min="1"
-            placeholder="Quantidade"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <ul className="food-list">
-          {searchResults.map((food) => (
-            <li key={food.id} className="food-item">
-              <span className="food-info">
-                {food.name} ({food.calories} kcal)
-              </span>
-              <button className="adicionar" onClick={() => handleAddFood(food)}>
-                Adicionar
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <div className="meal-summary">
-          <h4>Alimentos adicionados:</h4>
-          <ul className="food-list">
-            {meal.foods.map(({ food, quantity }) => (
-              <li key={food.name} className="food-item">
-                <span className="food-info">
-                  {food.name} - {quantity}x ({food.calories * quantity} kcal)
+        {loading ? (
+          <p>Carregando alimentos...</p>
+        ) : (
+          <div className="foods-list">
+            {filteredFoods.map((food) => (
+              <div key={food.id} className="food-item">
+                <span>
+                  {food.nome} ({food.calorias} kcal)
                 </span>
-                <button
-                  className="delete-button"
-                  title="Remover"
-                  onClick={() => handleRemoveFood(food.name)}
-                >
-                  🗑
-                </button>
-              </li>
+                <div className="food-actions">
+                  <input
+                    type="number"
+                    placeholder="Quantidade (g)"
+                    onChange={(e) => setQuantidade(Number(e.target.value))}
+                    min="0"
+                  />
+                  <button onClick={() => onSelect(food, quantidade)}>
+                    Selecionar
+                  </button>
+                </div>
+              </div>
             ))}
-          </ul>
-          <h4>Total da refeição: {calculateTotalCalories()} kcal</h4>
-        </div>
+          </div>
+        )}
 
-        <button className="close-button" onClick={onClose}>
-          Fechar
-        </button>
+        <div className="modal-actions">
+          <button onClick={onNewFood}>Cadastrar Novo Alimento</button>
+          <button onClick={onClose}>Fechar</button>
+        </div>
       </div>
     </div>
   );

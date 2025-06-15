@@ -1,13 +1,21 @@
-.food-selection-container {
+.food-registration-container {
   padding: 20px;
   background: white;
   border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.food-selection-container h3 {
+.food-registration-container h3 {
   margin-bottom: 20px;
   color: #333;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #dc2626;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
 }
 
 .form-group {
@@ -20,13 +28,17 @@
   font-weight: 500;
 }
 
-.form-group select,
 .form-group input {
   width: 100%;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 1em;
+}
+
+.form-group input:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
 }
 
 .button-group {
@@ -55,7 +67,7 @@
   box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
 }
 
-.food-selection-modal {
+.food-registration-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -67,51 +79,20 @@
   align-items: center;
 }
 
-.food-selection-content {
+.food-registration-content {
   background: white;
   padding: 20px;
   border-radius: 8px;
   width: 90%;
-  max-width: 600px;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.search-section {
-  margin-bottom: 20px;
-}
-
-.search-section input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.foods-list {
-  margin-bottom: 20px;
-}
-
-.food-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.food-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.food-actions input {
-  width: 80px;
-  padding: 4px;
+  max-width: 400px;
 }
 
 .modal-actions {
   text-align: right;
   margin-top: 20px;
+}
+
+.modal-actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

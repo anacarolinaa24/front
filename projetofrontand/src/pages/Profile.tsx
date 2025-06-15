@@ -1,303 +1,127 @@
-import { useState, useEffect } from "react";
-import "./Profile.css";
-import api from "../services/api";
-import { FaPencilAlt } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./Profile.css"; // Alterado para Profile.css
 
-interface ProfileData {
+interface UserData {
+  id: number;
   nome: string;
-  usuario: string;
   email: string;
   cpf: string;
-  senhaAtual: string;
-  novaSenha: string;
-  confirmarSenha: string;
 }
 
-const Profile = ({
-  isSidePanel,
-  onClose,
-}: {
-  isSidePanel?: boolean;
-  onClose?: () => void;
-}) => {
-  const [profile, setProfile] = useState<ProfileData>({
-    nome: "",
-    usuario: "",
-    email: "",
-    cpf: "",
-    senhaAtual: "",
-    novaSenha: "",
-    confirmarSenha: "",
-  });
-
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [showChangePassword, setShowChangePassword] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+const Profile: React.FC = () => { // Alterado para Profile
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState<Partial<UserData>>({});
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await api.get(
-          `/usuarios/${localStorage.getItem("userId")}`
-        );
-        const userData = response.data;
-        setProfile((prev) => ({
-          ...prev,
-          ...userData,
-          senhaAtual: "",
-          novaSenha: "",
-          confirmarSenha: "",
-        }));
-      } catch (error) {
-        setErrorMessage("Erro ao carregar dados do usuário");
-      }
-    };
-
     fetchUserData();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!profile.nome || !profile.usuario) {
-      setErrorMessage("Preencha todos os campos obrigatórios");
-      setSuccessMessage("");
-      return;
-    }
-
-    if (showChangePassword && (!profile.novaSenha || !profile.confirmarSenha)) {
-      setErrorMessage("Preencha todos os campos de senha");
-      setSuccessMessage("");
-      return;
-    }
-
-    if (showChangePassword && profile.novaSenha !== profile.confirmarSenha) {
-      setErrorMessage("As senhas não coincidem");
-      setSuccessMessage("");
-      return;
-    }
-
+  const fetchUserData = async () => {
     try {
-      const updateData = {
-        nome: profile.nome,
-        usuario: profile.usuario,
-        ...(showChangePassword && {
-          senhaAtual: profile.senhaAtual,
-          novaSenha: profile.novaSenha,
-        }),
-      };
-
-      const response = await api.put(
-        `/usuarios/${localStorage.getItem("userId")}`,
-        updateData
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "http://localhost:3001/api/usuario/perfil",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-
-      if (response.status === 200) {
-        setSuccessMessage("Perfil atualizado com sucesso!");
-        setEditMode(false);
-        setShowChangePassword(false);
-        setTimeout(() => {
-          setSuccessMessage("");
-          if (onClose) onClose();
-        }, 1500);
-      }
-    } catch (error: any) {
-      setErrorMessage(
-        error.response?.data?.message || "Erro ao atualizar perfil"
-      );
+      setUserData(response.data);
+      setEditData(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar dados do usuário:", error);
+      setError("Erro ao carregar dados do perfil");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleCancelEdit = () => {
-    setEditMode(false);
-    setShowChangePassword(false);
-    setErrorMessage("");
-    setSuccessMessage("");
-    (async () => {
-      try {
-        const response = await api.get(
-          `/usuarios/${localStorage.getItem("userId")}`
-        );
-        const userData = response.data;
-        setProfile((prev) => ({
-          ...prev,
-          ...userData,
-          senhaAtual: "",
-          novaSenha: "",
-          confirmarSenha: "",
-        }));
-      } catch (error) {
-        setErrorMessage("Erro ao carregar dados do usuário");
-      }
-    })();
+  const handleUpdate = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        "http://localhost:3001/api/usuario/perfil",
+        editData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setUserData((prev) => ({ ...prev, ...editData } as UserData));
+      setIsEditing(false);
+      alert("Perfil atualizado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao atualizar perfil:", error);
+      alert("Erro ao atualizar perfil");
+    }
   };
+
+  if (loading) return <div>Carregando...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  if (!userData) return <div>Nenhum dado encontrado</div>;
 
   return (
-    <form onSubmit={handleSubmit} className="profile-form">
+    <div className="profile-container">
       <h2>Meu Perfil</h2>
 
-      <div className="form-group editable-group">
-        <label htmlFor="nome">
-          Nome:
-          {!editMode && !showChangePassword && (
-            <button
-              type="button"
-              className="edit-pencil"
-              title="Editar"
-              onClick={() => setEditMode(true)}
-            >
-              <FaPencilAlt />
-            </button>
-          )}
-        </label>
-        <input
-          id="nome"
-          name="nome"
-          type="text"
-          value={profile.nome}
-          onChange={handleChange}
-          required
-          disabled={!editMode || showChangePassword}
-        />
-      </div>
-
-      <div className="form-group editable-group">
-        <label htmlFor="usuario">
-          Nome de Usuário:
-          {!editMode && !showChangePassword && (
-            <button
-              type="button"
-              className="edit-pencil"
-              title="Editar"
-              onClick={() => setEditMode(true)}
-            >
-              <FaPencilAlt />
-            </button>
-          )}
-        </label>
-        <input
-          id="usuario"
-          name="usuario"
-          type="text"
-          value={profile.usuario}
-          onChange={handleChange}
-          required
-          disabled={!editMode || showChangePassword}
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={profile.email}
-          disabled
-          className="disabled-input"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="cpf">CPF:</label>
-        <input
-          id="cpf"
-          name="cpf"
-          type="text"
-          value={profile.cpf}
-          disabled
-          className="disabled-input"
-        />
-      </div>
-
-      {/* Campo de senha atual só aparece ao editar dados (não ao alterar senha) */}
-      {!showChangePassword && editMode && (
-        <div className="form-group">
-          <label htmlFor="senhaAtual">Senha Atual:</label>
-          <input
-            id="senhaAtual"
-            name="senhaAtual"
-            type="password"
-            value={profile.senhaAtual}
-            onChange={handleChange}
-            placeholder="Senha atual para salvar alterações"
-            required
-          />
-        </div>
-      )}
-
-      {!showChangePassword && (
-        <button
-          type="button"
-          onClick={() => {
-            setShowChangePassword(true);
-            setEditMode(true);
-          }}
-          className="change-password-button"
-        >
-          Alterar senha
-        </button>
-      )}
-
-      {showChangePassword && (
-        <div className="senha-group">
-          <h3>Nova Senha</h3>
+      {isEditing ? (
+        <div className="profile-form">
           <div className="form-group">
-            <label htmlFor="novaSenha">Nova Senha:</label>
+            <label>Nome:</label>
             <input
-              id="novaSenha"
-              name="novaSenha"
-              type="password"
-              value={profile.novaSenha}
-              onChange={handleChange}
-              placeholder="Digite a nova senha"
-              required
+              type="text"
+              value={editData.nome || ""}
+              onChange={(e) =>
+                setEditData((prev) => ({ ...prev, nome: e.target.value }))
+              }
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="confirmarSenha">Confirmar Nova Senha:</label>
+            <label>Email:</label>
             <input
-              id="confirmarSenha"
-              name="confirmarSenha"
-              type="password"
-              value={profile.confirmarSenha}
-              onChange={handleChange}
-              placeholder="Digite novamente a nova senha"
-              required
+              type="email"
+              value={editData.email || ""}
+              onChange={(e) =>
+                setEditData((prev) => ({ ...prev, email: e.target.value }))
+              }
             />
           </div>
+
+          <div className="form-group">
+            <label>CPF:</label>
+            <input type="text" value={editData.cpf || ""} readOnly />
+          </div>
+
+          <div className="button-group">
+            <button onClick={handleUpdate}>Salvar</button>
+            <button onClick={() => setIsEditing(false)}>Cancelar</button>
+          </div>
+        </div>
+      ) : (
+        <div className="profile-info">
+          <p>
+            <strong>Nome:</strong> {userData.nome}
+          </p>
+          <p>
+            <strong>Email:</strong> {userData.email}
+          </p>
+          <p>
+            <strong>CPF:</strong> {userData.cpf}
+          </p>
+
+          <button onClick={() => setIsEditing(true)}>Editar Perfil</button>
         </div>
       )}
-
-      <div className="button-group">
-        {(editMode || showChangePassword) && (
-          <>
-            <button type="submit">Salvar Alterações</button>
-            <button
-              type="button"
-              className="cancel-button"
-              onClick={handleCancelEdit}
-            >
-              Cancelar
-            </button>
-          </>
-        )}
-      </div>
-
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      {successMessage && <p className="success-message">{successMessage}</p>}
-    </form>
+    </div>
   );
 };
 
-export default Profile;
+export default Profile; // Alterado para Profile

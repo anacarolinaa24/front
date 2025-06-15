@@ -143,15 +143,713 @@
   align-items: center;
 }
 
-/* Responsivo */
-@media (max-width: 600px) {
-  .side-diet-panel {
-    min-width: 90vw;
-    max-width: 98vw;
-    padding: 1.2rem 0.5rem;
+/* Novas classes adicionadas */
+.new-diet-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #fff;
+  background-color: #222;
+  border-radius: 12px;
+  border: 2px solid #c20a6f;
+  box-shadow: 0 4px 15px rgba(194, 10, 111, 0.3);
+}
+
+.new-diet-container h2 {
+  color: #c20a6f;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 28px;
+  text-shadow: 0 0 5px rgba(194, 10, 111, 0.4);
+}
+
+/* Ajustes para o campo de nome da dieta */
+.nome-dieta-field {
+  margin: 0 auto 30px auto;
+  max-width: 80%;
+  text-align: center;
+}
+
+.nome-dieta-field label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #fff;
+  font-size: 18px;
+}
+
+.nome-dieta-input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 2px solid #c20a6f;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+  transition: all 0.3s;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.nome-dieta-input:focus {
+  border-color: #ff47a9;
+  box-shadow: 0 0 12px rgba(194, 10, 111, 0.5);
+  outline: none;
+}
+
+/* Botões de refeições */
+.refeicoes-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.refeicao-button-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.refeicao-button {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 15px;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease, border-color 0.2s ease;
+  min-height: 100px;
+  color: #fff;
+}
+
+.refeicao-button:hover {
+  background-color: #444;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+  border-color: #4caf50; /* Verde médio para o contorno */
+  border-width: 2px; /* Contorno um pouco mais grosso para destacar */
+}
+
+/* Também vamos adicionar uma transição suave para a mudança de cor da borda */
+.refeicao-button {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 15px;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease, border-color 0.2s ease;
+  min-height: 100px;
+  color: #fff;
+}
+
+/* Ajuste adicional para o caso de refeições com alimentos */
+.refeicao-button.com-alimentos:hover {
+  background-color: #3d0523;
+  border-color: #4caf50; /* Verde médio para o contorno */
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3),
+    0 0 15px rgba(194, 10, 111, 0.2);
+}
+
+.refeicao-button-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.alimentos-count {
+  font-size: 0.85rem;
+  color: #fff;
+  background-color: #c20a6f;
+  padding: 3px 8px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.refeicao-button-info {
+  font-size: 0.9rem;
+  color: #ff99c8;
+  background-color: rgba(194, 10, 111, 0.15);
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.horario-field-mini {
+  margin-top: 5px;
+}
+
+.horario-field-mini input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #c20a6f;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+}
+
+/* Formulário de refeição */
+.refeicao-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.refeicao-form {
+  background-color: #222;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  border-radius: 12px;
+  padding: 25px;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(194, 10, 111, 0.5);
+  border: 2px solid #c20a6f;
+  color: #fff;
+}
+
+.refeicao-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #c20a6f;
+}
+
+.refeicao-form-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  flex-grow: 1;
+  color: #c20a6f;
+}
+
+.horario-selector {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.horario-selector label {
+  margin-right: 10px;
+  color: #fff;
+}
+
+.horario-selector input {
+  padding: 8px;
+  border: 1px solid #c20a6f;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+}
+
+.close-form-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ff47a9;
+}
+
+.close-form-btn:hover {
+  color: #fff;
+}
+
+/* Seção de busca de alimentos */
+.alimentos-search-section {
+  margin-bottom: 20px;
+}
+
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid #c20a6f;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #333;
+  color: #fff;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #ff47a9;
+  box-shadow: 0 0 8px rgba(194, 10, 111, 0.5);
+}
+
+.add-alimento-btn {
+  background-color: #4caf50; /* Verde médio */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.add-alimento-btn:hover {
+  background-color: #2e7d32; /* Verde escuro */
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
+}
+
+.search-results {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #c20a6f;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  background-color: #333;
+}
+
+.alimentos-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alimentos-list li {
+  padding: 12px 15px;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.alimentos-list li:hover {
+  background-color: #444;
+}
+
+.alimentos-list li.selected {
+  background-color: #3d0523;
+  border-left: 4px solid #c20a6f;
+}
+
+.no-results {
+  padding: 15px;
+  text-align: center;
+  color: #ccc;
+}
+
+.quantidade-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #333;
+  border-radius: 6px;
+  border: 1px solid #c20a6f;
+}
+
+.quantidade-container label {
+  font-weight: 500;
+  color: #fff;
+}
+
+.quantidade-container input {
+  width: 80px;
+  padding: 8px;
+  border: 1px solid #c20a6f;
+  border-radius: 4px;
+  background-color: #444;
+  color: #fff;
+}
+
+.add-to-refeicao-btn {
+  background-color: #c20a6f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: all 0.3s;
+}
+
+.add-to-refeicao-btn:hover {
+  background-color: #ff47a9;
+  transform: translateY(-2px);
+}
+
+/* Seção de alimentos selecionados */
+.selected-alimentos-section {
+  margin-top: 20px;
+}
+
+.selected-alimentos-section h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: #c20a6f;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+}
+
+.selected-alimentos-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selected-alimento-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #333;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border-left: 3px solid #c20a6f;
+}
+
+.alimento-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.alimento-nome {
+  font-weight: 500;
+  color: #fff;
+}
+
+.alimento-calorias {
+  color: #ff99c8;
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
+
+.alimento-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.alimento-quantidade {
+  color: #ccc;
+  font-size: 0.9rem;
+  background-color: #444;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.remove-alimento-btn {
+  background-color: #c20a6f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.remove-alimento-btn:hover {
+  background-color: #ff47a9;
+}
+
+.no-selected-alimentos {
+  text-align: center;
+  color: #ccc;
+  padding: 20px 0;
+  font-style: italic;
+}
+
+/* Modal de novo alimento - tema branco e verde */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: #222;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(194, 10, 111, 0.5);
+  border: 2px solid #c20a6f;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
   }
-  .food-card {
-    min-width: 90vw;
-    padding: 1rem 0.2rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h3 {
+  color: #ff47a9; /* Rosa mais claro e vibrante */
+  margin-bottom: 20px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 12px;
+  font-size: 1.4rem;
+}
+
+/* Labels em verde para destacar */
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #4caf50; /* Verde médio para labels */
+  font-size: 1.1rem;
+}
+
+/* Inputs com fundo branco */
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #c20a6f;
+  border-radius: 8px;
+  background-color: #ffffff; /* Fundo branco para inputs */
+  color: #333333; /* Texto escuro */
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #ff47a9;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(194, 10, 111, 0.3);
+}
+
+.form-group input::placeholder {
+  color: #999999;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.modal-buttons button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.modal-buttons button:first-child {
+  background-color: #4caf50; /* Verde médio */
+  color: white;
+}
+
+.modal-buttons button:first-child:hover {
+  background-color: #2e7d32; /* Verde escuro */
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
+}
+
+.modal-buttons button:last-child {
+  background-color: #f5f5f5;
+  color: #555555;
+  border: 1px solid #e0e0e0;
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #eeeeee;
+  color: #333333;
+}
+
+/* Botão salvar dieta */
+.save-diet-btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #c20a6f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.save-diet-btn:hover {
+  background-color: #ff47a9;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(194, 10, 111, 0.5);
+}
+
+.save-diet-btn:active {
+  transform: translateY(-1px);
+}
+
+/* Estilização da barra de rolagem */
+.search-results::-webkit-scrollbar,
+.refeicao-form::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-results::-webkit-scrollbar-track,
+.refeicao-form::-webkit-scrollbar-track {
+  background: #333;
+}
+
+.search-results::-webkit-scrollbar-thumb,
+.refeicao-form::-webkit-scrollbar-thumb {
+  background-color: #c20a6f;
+  border-radius: 4px;
+}
+
+/* Correção para garantir que o horário fique ao lado do nome da refeição */
+.refeicao-nome-horario {
+  display: flex;
+  flex-direction: row; /* Garante que os itens fiquem lado a lado */
+  align-items: center;
+  justify-content: space-between; /* Espaça o nome e o horário */
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.refeicao-nome {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+/* Melhorias no layout do horário com emoji de relógio */
+.refeicao-horario {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-left: auto;
+}
+
+.refeicao-horario-icon {
+  font-size: 1.3rem;
+  color: #ff99c8;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 5px;
+}
+
+.refeicao-horario-icon:hover {
+  transform: scale(1.2);
+  color: #ffb1d8;
+}
+
+.refeicao-horario-selector {
+  position: absolute;
+  top: -5px;
+  right: 25px;
+  background-color: #333;
+  border: 1px solid #c20a6f;
+  border-radius: 4px;
+  padding: 5px;
+  z-index: 5;
+  display: none; /* Escondido por padrão */
+  box-shadow: 0 2px 10px rgba(194, 10, 111, 0.5);
+}
+
+.refeicao-horario-selector.visible {
+  display: block; /* Visível quando tem a classe 'visible' */
+  animation: fadeIn 0.2s;
+}
+
+.refeicao-horario-valor {
+  color: #ff99c8;
+  font-size: 0.9rem;
+  margin-right: 8px;
+}
+
+.refeicao-horario input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 0.95rem;
+  padding: 5px;
+}
+
+.refeicao-horario input:focus {
+  outline: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 600px) {
+  .refeicoes-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .search-container {
+    flex-direction: column;
+  }
+
+  .quantidade-container {
+    flex-wrap: wrap;
+  }
+
+  .add-to-refeicao-btn {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .selected-alimento-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .alimento-actions {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .nome-dieta-field {
+    max-width: 95%;
   }
 }

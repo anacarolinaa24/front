@@ -1,0 +1,28 @@
+.food-rain {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.food-drop {
+  position: absolute;
+  top: -100px;
+  color: black;
+  filter: grayscale(100%);
+  text-shadow: -1px -1px 0 #c20a6f, 1px -1px 0 #c20a6f, -1px 1px 0 #c20a6f,
+    1px 1px 0 #c20a6f;
+  animation-name: food-fall;
+  animation-timing-function: linear;
+}
+
+@keyframes food-fall {
+  to {
+    top: 100vh;
+    transform: translateY(100vh) rotate(360deg);
+  }
+}

@@ -9,16 +9,18 @@
   flex-direction: row;
   align-items: center; /* Centraliza verticalmente por padrão */
   justify-content: center; /* Centraliza horizontalmente por padrão */
-  transition: align-items 0.3s, justify-content 0.3s;
+  transition: all 0.5s;
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
   box-sizing: border-box;
   padding: 0;
 }
 
-/* Quando o painel lateral estiver aberto, alinha à esquerda */
-.options-lateral-container.with-side {
+/* Quando o painel lateral estiver aberto, reorganiza o layout */
+.options-lateral-container:has(.side-content) {
   align-items: flex-start;
   justify-content: flex-start;
+  padding: 40px;
+  gap: 30px;
 }
 
 .options-box-row {
@@ -27,19 +29,21 @@
   background: #111;
   border-radius: 22px;
   border: 2.5px solid #c20a6f;
-  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.18);
+  box-shadow: 0 4px 24px rgba(194, 10, 111, 0.4);
   padding: 2.5rem 2rem;
   max-width: 750px;
   width: 100%;
   align-items: center;
   gap: 2.5rem;
   transition: transform 0.5s cubic-bezier(0.4, 2, 0.6, 1), opacity 0.5s;
+  z-index: 1;
 }
 
+/* Efeito quando minimizado */
 .options-box-row.minimize {
-  transform: scale(0.7) translateX(-200px);
+  transform: scale(0.7) translateX(-30px);
   opacity: 0.7;
-  pointer-events: none;
+  box-shadow: 0 4px 24px rgba(194, 10, 111, 0.2);
 }
 
 .profile-area {
@@ -56,15 +60,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Remove o quadrado de fundo e adiciona efeito de luz/contraste */
   background: none;
-  box-shadow: 0 0 100px 1px #206c40df, 0 0 0 0 #fff;
+  box-shadow: 0 0 25px 1px #c20a6f;
   border-radius: 50%;
-  transition: box-shadow 0.3s;
+  transition: all 0.5s;
+  overflow: hidden;
+  animation: pulse 3s infinite alternate;
 }
 
-.user-avatar:hover {
-  box-shadow: 0 0 48px 16px #c20a6f, 0 0 0 0 #fff;
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 25px 1px #c20a6f;
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 35px 5px #c20a6f;
+    transform: scale(1.05);
+  }
+}
+
+.user-avatar svg {
+  transition: all 0.3s;
+}
+
+.user-avatar:hover svg {
+  transform: scale(1.1);
 }
 
 .profile-button {
@@ -77,13 +97,14 @@
   font-weight: 600;
   margin-bottom: 1.2rem;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
 
 .profile-button:hover {
   background: #fff;
   color: #c20a6f;
+  transform: translateY(-3px);
 }
 
 .options-area {
@@ -100,6 +121,7 @@
   margin-bottom: 1.5rem;
   text-align: center;
   letter-spacing: 1px;
+  text-shadow: 0 0 10px #c20a6f;
 }
 
 .button-container {
@@ -120,9 +142,31 @@
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  transition: all 0.3s;
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
   width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.option-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: all 0.4s;
+}
+
+.option-button:hover:before {
+  left: 100%;
 }
 
 .option-button:hover,
@@ -131,6 +175,8 @@
   color: #c20a6f;
   border: 2px solid #c20a6f;
   outline: none;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(194, 10, 111, 0.4);
 }
 
 /* Painel lateral do formulário */
@@ -138,16 +184,17 @@
   background: #181818;
   border-radius: 22px;
   border: 2.5px solid #c20a6f;
-  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.18);
+  box-shadow: 0 4px 24px rgba(194, 10, 111, 0.4);
   min-width: 400px;
   min-height: 500px;
-  padding: 2.5rem 2rem;
+  max-height: 90vh;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  flex: 1;
   z-index: 2;
   animation: sideIn 0.5s;
-  margin-left: 32px; /* Espaço entre o cartão e o painel lateral */
+  overflow-y: auto;
 }
 
 @keyframes sideIn {
@@ -169,47 +216,73 @@
   padding: 0.5em 1.5em;
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.2s;
+  align-self: flex-start;
 }
 
 .back-button:hover {
   background: #fff;
   color: #c20a6f;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(194, 10, 111, 0.3);
 }
 
-/* Responsivo */
+.side-component-content {
+  color: #fff;
+  height: 100%;
+}
+
+.side-component-content h2 {
+  color: #c20a6f;
+  margin-bottom: 1rem;
+}
+
+/* Responsividade */
 @media (max-width: 900px) {
   .options-lateral-container,
-  .options-lateral-container.with-side {
+  .options-lateral-container:has(.side-content) {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
+    padding: 20px;
   }
+
   .side-content {
-    margin-left: 0;
     margin-top: 2rem;
     min-width: unset;
-    width: 95vw;
+    width: 95%;
+    align-self: center;
   }
+
   .options-box-row {
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
     padding: 2rem 0.5rem;
-    max-width: 98vw;
+    max-width: 98%;
+    align-self: center;
   }
+
+  .options-box-row.minimize {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+
   .options-area {
     width: 100%;
   }
+
   .button-container {
-    width: 95vw;
+    width: 95%;
     max-width: 340px;
   }
+
   .profile-area {
     min-width: 0;
   }
+
   .user-avatar {
     width: 80px;
     height: 80px;
